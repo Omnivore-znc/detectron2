@@ -24,6 +24,7 @@ from .register_coco import register_coco_instances, register_coco_panoptic_separ
 from .lvis import register_lvis_instances, get_lvis_instances_meta
 from .cityscapes import load_cityscapes_instances, load_cityscapes_semantic
 from .pascal_voc import register_pascal_voc
+from .defect29c_voc import register_defect29c_voc
 from .builtin_meta import _get_builtin_metadata
 
 
@@ -207,9 +208,24 @@ def register_all_pascal_voc(root="datasets"):
         register_pascal_voc(name, os.path.join(root, dirname), split, year)
         MetadataCatalog.get(name).evaluator_type = "pascal_voc"
 
+# ==== Predefined splits for grid defect ===========
+def register_all_defect29c_voc(root="datasets"):
+    SPLITS = [
+        ("defect29classes_voc_trainval_pack1_pack2_bdz_round1all_xyselfget_aug_maybetest", "grid_defect_29classes", "trainval_pack1_pack2_bdz_round1all_xyselfget_aug_maybetest"),
+        ("defect29classes_voc_trainval_pack1_pack2_bdz_round1all_xyselfget_maybetest", "grid_defect_29classes", "trainval_pack1_pack2_bdz_round1all_xyselfget_maybetest"),
+        ("defect29classes_voc_test_pack1_pack2", "grid_defect_29classes", "test_pack1_pack2"),
+        ("defect29classes_voc_test_pack1_pack2_small", "grid_defect_29classes", "test_pack1_pack2_small"),
+        ("defect29classes_voc_test_pack1_pack2_smallest", "grid_defect_29classes", "test_pack1_pack2_smallest"),
+    ]
+    for name, dirname, split in SPLITS:
+        year=2019
+        register_defect29c_voc(name, os.path.join(root, dirname), split, year)
+        MetadataCatalog.get(name).evaluator_type = "pascal_voc_details"
+
 
 # Register them all under "./datasets"
 register_all_coco()
 register_all_lvis()
 register_all_cityscapes()
 register_all_pascal_voc()
+register_all_defect29c_voc()

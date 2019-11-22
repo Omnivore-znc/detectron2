@@ -1,4 +1,5 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
+import os
 import pickle
 from fvcore.common.checkpoint import Checkpointer
 from fvcore.common.file_io import PathManager
@@ -57,3 +58,25 @@ class DetectionCheckpointer(Checkpointer):
             checkpoint["model"] = model_state_dict
         # for non-caffe2 models, use standard ways to load it
         super()._load_model(checkpoint)
+
+    # def resume_or_load(self, path: str, *, resume: bool = True):
+    #     """
+    #     If `resume` is True, this method attempts to resume from the last
+    #     checkpoint, if exists. Otherwise, load checkpoint from the given path.
+    #     This is useful when restarting an interrupted training job.
+    #
+    #     Args:
+    #         path (str): path to the checkpoint.
+    #         resume (bool): if True, resume from the last checkpoint if it exists.
+    #
+    #     Returns:
+    #         same as :meth:`load`.
+    #     """
+    #     if resume and self.has_checkpoint():
+    #         path = self.get_checkpoint_file()
+    #         return self.load(path)
+    #     #print("here2")
+    #     #assert (0)
+    #     mdl = super()._load_file(path)
+    #     mdl["iteration"]=0
+    #     return mdl
